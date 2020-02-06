@@ -11,7 +11,7 @@ Feature: CE
     Then <buttonCE> should change to <buttonC>
     Examples:
       | number1 | buttonCE | buttonC |
-      | "30"    | "CE"    | "C"     |
+      | "30"    | "CE"     | "C"     |
 
   Scenario Outline:
     Given User uses the online-calculator
@@ -22,4 +22,4 @@ Feature: CE
 
     Examples:
       | number1 | buttonC | buttonCE |
-      | "30"    | "C"    | "CE"     |
+      | "30"    | "C"     | "CE"     |
