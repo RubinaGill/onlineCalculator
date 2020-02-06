@@ -11,7 +11,7 @@ Assignment for end to end tests using Cucumber, Selenium, Java
 * Cucumber
 * JavaScript
 
-##Running the tests
+## Running the tests
 ####  Through commandline
 mvn test
 
