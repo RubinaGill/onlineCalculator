@@ -18,5 +18,5 @@ mvn test
 ####  Through UI
 Run the src/test/java/calculator/RunCucumberTests.java
 
-##Reports Generated 
+## Reports Generated 
 Path: target/cucumber-html-report/index.html
