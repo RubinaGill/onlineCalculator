@@ -15,7 +15,7 @@ public class Division extends RunCucumberTests {
             calculatorPage=new CalculatorPage(getDriver());
             calculatorPage.selectOperator('/');
             for(char digit:number.toCharArray()) {
-                calculatorPage.enterNumber(digit);
+                calculatorPage.enterNumber(String.valueOf(digit));
             }
             calculatorPage.selectOperator('=');
         } catch (Exception e) {

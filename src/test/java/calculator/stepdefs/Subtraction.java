@@ -28,7 +28,7 @@ public class Subtraction extends RunCucumberTests {
     public void user_have_entered_into_the_calculator(String number) {
         try {
             for(char digit:number.toCharArray()) {
-                calculatorPage.enterNumber(digit);
+                calculatorPage.enterNumber(String.valueOf(digit));
             }
         } catch (Exception e) {
             LOGGER.info("-----------------User is unable to enter number in calculator--------------------------" , e);
@@ -40,7 +40,7 @@ public class Subtraction extends RunCucumberTests {
         try {
             calculatorPage.selectOperator('-');
             for(char digit:number.toCharArray()) {
-                calculatorPage.enterNumber(digit);
+                calculatorPage.enterNumber(String.valueOf(digit));
             }
             calculatorPage.selectOperator('-');
         } catch (Exception e) {

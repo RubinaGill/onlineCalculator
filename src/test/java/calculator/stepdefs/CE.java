@@ -14,7 +14,7 @@ public class CE extends RunCucumberTests {
     public void button_must_be_visible(String expectedResult) {
         try {
             calculatorPage=new CalculatorPage(getDriver());
-            Assert.assertEquals(expectedResult,calculatorPage.getButtonText(),"result of calculation is not correct");
+            Assert.assertEquals(expectedResult,calculatorPage.getButtonText("CE"),"result of calculation is not correct");
         } catch (Exception e) {
             LOGGER.info("-----------------User is unable to compare results--------------------------" , e);
         }
@@ -23,7 +23,7 @@ public class CE extends RunCucumberTests {
   @Then("{string} should change to {string}")
     public void should_change_to(String button1,String button2) {
         try {
-            Assert.assertEquals("C",calculatorPage.getButtonText(),"result of calculation is not correct");
+            Assert.assertEquals("C",calculatorPage.getButtonText(button2),"result of calculation is not correct");
         } catch (Exception e) {
             LOGGER.info("-----------------User is unable to compare results--------------------------" , e);
         }

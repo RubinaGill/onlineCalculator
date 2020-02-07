@@ -10,6 +10,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.log4testng.Logger;
 import com.asprise.ocr.Ocr;
+
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.awt.image.RenderedImage;
@@ -34,17 +35,17 @@ public class SeleniumUtility {
     private WebDriverWait wait;
     private WebDriver webDriver;
 
-    protected boolean moveWithinElement(By webElementLocator,int xOffset,int yOffset) throws Exception {
+    protected boolean moveWithinElement(By webElementLocator, int xOffset, int yOffset) throws Exception {
         try {
             WebElement element = wait.until(ExpectedConditions.elementToBeClickable(webElementLocator));
-            new Actions(webDriver).moveToElement(element,0,0)
-                    .moveByOffset(xOffset,yOffset)
+            new Actions(webDriver).moveToElement(element, 0, 0)
+                    .moveByOffset(xOffset, yOffset)
                     .click()
                     .build()
                     .perform();
             return true;
         } catch (Exception e) {
-            LOGGER.info("-----------------Exception occurred--------------------------" , e);
+            LOGGER.info("-----------------Exception occurred--------------------------", e);
             throw new Exception("user not able to move within element By offset ");
         }
     }
@@ -55,58 +56,48 @@ public class SeleniumUtility {
             wait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(frameElement));
             return true;
         } catch (Exception e) {
-            LOGGER.info("-----------------Exception occurred--------------------------" , e);
+            LOGGER.info("-----------------Exception occurred--------------------------", e);
             throw new Exception("user is not able to switch frame");
         }
     }
 
     protected boolean deleteElement(By frameElement) throws Exception {
         try {
-            ((JavascriptExecutor)webDriver).executeScript("return document.getElementById('dom_overlay_container').remove();");
+            ((JavascriptExecutor) webDriver).executeScript("return document.getElementById('dom_overlay_container').remove();");
             return true;
         } catch (Exception e) {
-            LOGGER.info("-----------------Exception occurred--------------------------" , e);
+            LOGGER.info("-----------------Exception occurred--------------------------", e);
             throw new Exception("user is not able to switch frame");
         }
     }
 
-    protected String getText(By webElementLocator, int xOffset,int yOffset,int width,int height){
+    protected String getText(By webElementLocator, int xOffset, int yOffset, int width, int height) {
         // Get entire page screenshot
-
         WebElement element = wait.until(ExpectedConditions.elementToBeClickable(webElementLocator));
-        File screenshot = ((TakesScreenshot)webDriver).getScreenshotAs(OutputType.FILE);
+        File screenshot = ((TakesScreenshot) webDriver).getScreenshotAs(OutputType.FILE);
+        String screenshotName="temp_screenshot.png";
         try {
+            String path = System.getProperty("user.dir");
             BufferedImage fullImg = ImageIO.read(screenshot);
-
             Point point = element.getLocation();
-            // Crop the entire page screenshot to get only element screenshot
-            /*BufferedImage eleScreenshot= fullImg.getSubimage(point.getX()+200, point.getY()+20,
-                    150, 70);*/
-            BufferedImage eleScreenshot= fullImg.getSubimage(point.getX()+xOffset, point.getY()+yOffset,
+
+            BufferedImage eleScreenshot = fullImg.getSubimage(point.getX() + xOffset, point.getY() + yOffset,
                     width, height);
             ImageIO.write(eleScreenshot, "png", screenshot);
 
-// Copy the element screenshot to disk
-            File screenshotLocation = new File("C:\\Users\\asaxena\\Documents\\Assignment\\online-calculator\\src\\test\\resources\\GoogleLogo_screenshot.png");
+            // Copy the element screenshot to disk
+            File screenshotLocation = new File(path+"\\src\\test\\resources\\"+screenshotName);
             FileUtils.copyFile(screenshot, screenshotLocation);
-            BufferedImage image = ImageIO.read(screenshot);
-          /*  Ocr.setUp();
-            Ocr ocr=new Ocr();
-            if(ocr.isEngineRunning()){
-                ocr.stopEngine();
-            }
-            ocr.startEngine("eng", Ocr.SPEED_FASTEST);
-            String result= ocr.recognize(image, Ocr.RECOGNIZE_TYPE_ALL, Ocr.OUTPUT_FORMAT_PLAINTEXT);
-            ocr.stopEngine();*/
+            System.setProperty("TESSDATA_PREFIX", path+"\\tessData");
             ITesseract tesseract = new Tesseract();
-            File imageFile = new File("C:\\Users\\asaxena\\Documents\\Assignment\\online-calculator\\src\\test\\resources\\GoogleLogo_screenshot.png");
-           // tesseract.setDatapath("C:\\Users\\asaxena\\Documents\\Assignment\\online-calculator\\src\\test\\resources\\tessData");
-            String result=tesseract.doOCR(imageFile);
-            return result;
-        } catch (IOException e) {
-            e.printStackTrace();
-            return "";
-        } catch (TesseractException e) {
+
+            //tesseract.setTessVariable("tessedit_char_whitelist", "0123456789");
+            
+            tesseract.setDatapath(path+"\\tessData");
+            File imageFile = new File(path + "\\src\\test\\resources\\"+screenshotName);
+            String result = tesseract.doOCR(imageFile);
+            return result.trim();
+        }catch (TesseractException | IOException e) {
             e.printStackTrace();
         }
         return "";

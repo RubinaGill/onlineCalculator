@@ -26,7 +26,7 @@ public class CalculatorPage extends SeleniumUtility {
         }
     }
 
-    public boolean enterNumber(char number) throws Exception{
+    public boolean enterNumber(String number) throws Exception{
         try {
 
             return moveWithinElement(CANVAS,(70)*getXPositionOfButton(number),(70)*getYPositionOfButton(number));
@@ -36,9 +36,9 @@ public class CalculatorPage extends SeleniumUtility {
         }
     }
 
-    private int getXPositionOfButton(char button) throws Exception{
+    private int getXPositionOfButton(String button) throws Exception{
         try {
-            switch (Character.toString(button)){
+            switch (button){
                 case "1":
                 case "0":
                 case "4":
@@ -69,9 +69,9 @@ public class CalculatorPage extends SeleniumUtility {
     }
 
 
-    private int getYPositionOfButton(char button) throws Exception{
+    private int getYPositionOfButton(String button) throws Exception{
         try {
-            switch (Character.toString(button)){
+            switch (button){
                 case "CE":
                     return 2;
                 case "7":
@@ -102,7 +102,7 @@ public class CalculatorPage extends SeleniumUtility {
 
     public boolean selectOperator(char operator)throws Exception {
         try {
-            return moveWithinElement(CANVAS,(70)*getXPositionOfButton(operator),(70)*getYPositionOfButton(operator));
+            return moveWithinElement(CANVAS,(70)*getXPositionOfButton(String.valueOf(operator)),(70)*getYPositionOfButton(String.valueOf(operator)));
         } catch (Exception e) {
             LOGGER.info("-----------------Exception occurred--------------------------" , e);
             throw new Exception("-----------------User is unable to click on number--------------------------");
@@ -118,10 +118,13 @@ public class CalculatorPage extends SeleniumUtility {
         }
     }
 
-    public String getButtonText(){
+    public String getButtonText(String buttonName){
         try {
-            return getText(CANVAS,200,20,150,70);
+            return getText(CANVAS,(70)*getXPositionOfButton(buttonName)-45,(70)*getYPositionOfButton(buttonName)-20,40,45);
         } catch (NumberFormatException e) {
+            LOGGER.info("-----------------Exception occurred--------------------------" , e);
+            return "";
+        } catch (Exception e) {
             LOGGER.info("-----------------Exception occurred--------------------------" , e);
             return "";
         }
