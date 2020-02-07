@@ -35,6 +35,9 @@ public class SeleniumUtility {
     private WebDriverWait wait;
     private WebDriver webDriver;
 
+    protected int getElementWidth(By webElementLocator){
+        return  wait.until(ExpectedConditions.elementToBeClickable(webElementLocator)).getSize().width;
+    }
     protected boolean moveWithinElement(By webElementLocator, int xOffset, int yOffset) throws Exception {
         try {
             WebElement element = wait.until(ExpectedConditions.elementToBeClickable(webElementLocator));
@@ -92,7 +95,7 @@ public class SeleniumUtility {
             ITesseract tesseract = new Tesseract();
 
             //tesseract.setTessVariable("tessedit_char_whitelist", "0123456789");
-            
+
             tesseract.setDatapath(path+"\\tessData");
             File imageFile = new File(path + "\\src\\test\\resources\\"+screenshotName);
             String result = tesseract.doOCR(imageFile);

@@ -5,7 +5,7 @@ Feature: CE
     Given User uses the online-calculator
     Then "CE" button must be visible
 
-  Scenario Outline:
+  Scenario Outline: Behaviour after entering number
     Given User uses the online-calculator
     When User have entered <number1> into the calculator
     Then <buttonCE> should change to <buttonC>
@@ -13,7 +13,7 @@ Feature: CE
       | number1 | buttonCE | buttonC |
       | "30"    | "CE"     | "C"     |
 
-  Scenario Outline:
+  Scenario Outline:Behaviour after clearing input
     Given User uses the online-calculator
     When User have entered <number1> into the calculator
     And  User have entered <buttonC> into the calculator

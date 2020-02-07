@@ -59,6 +59,7 @@ public class CalculatorPage extends SeleniumUtility {
                         return 4;
                 case "=":
                 case "CE":
+                case "C":
                         return 5;
             }
             return 0;
@@ -73,6 +74,7 @@ public class CalculatorPage extends SeleniumUtility {
         try {
             switch (button){
                 case "CE":
+                case "C":
                     return 2;
                 case "7":
                 case "8":
@@ -111,7 +113,8 @@ public class CalculatorPage extends SeleniumUtility {
 
     public String fetchResult(){
         try {
-            return getText(CANVAS,200,20,150,70);
+
+            return getText(CANVAS,25,25,getElementWidth(CANVAS)-50,50);
         } catch (NumberFormatException e) {
             LOGGER.info("-----------------Exception occurred--------------------------" , e);
             return "";
@@ -121,9 +124,6 @@ public class CalculatorPage extends SeleniumUtility {
     public String getButtonText(String buttonName){
         try {
             return getText(CANVAS,(70)*getXPositionOfButton(buttonName)-45,(70)*getYPositionOfButton(buttonName)-20,40,45);
-        } catch (NumberFormatException e) {
-            LOGGER.info("-----------------Exception occurred--------------------------" , e);
-            return "";
         } catch (Exception e) {
             LOGGER.info("-----------------Exception occurred--------------------------" , e);
             return "";
