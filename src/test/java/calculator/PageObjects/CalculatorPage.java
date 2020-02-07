@@ -123,7 +123,7 @@ public class CalculatorPage extends SeleniumUtility {
 
     public String getButtonText(String buttonName){
         try {
-            return getText(CANVAS,(70)*getXPositionOfButton(buttonName)-45,(70)*getYPositionOfButton(buttonName)-20,40,45);
+            return getText(CANVAS,(70)*getXPositionOfButton(buttonName)-45,(70)*getYPositionOfButton(buttonName)-20,50,50);
         } catch (Exception e) {
             LOGGER.info("-----------------Exception occurred--------------------------" , e);
             return "";

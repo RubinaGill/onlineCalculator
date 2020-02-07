@@ -54,9 +54,16 @@ public class Subtraction extends RunCucumberTests {
     @Then("result should be {string} on the screen")
     public void result_should_be_on_the_screen(String expectedResult) {
         try {
+            if(expectedResult.equals("0")){
+                //as zero is interpreted as "O" by OCR
+                expectedResult="O";
+            }
+            if(expectedResult.contains("-")){
+                //as - is interpreted as "—" by OCR
+              expectedResult=expectedResult.replace('-','—');
+            }
             calculatorPage= new CalculatorPage(getDriver());
-            Assert.assertEquals(calculatorPage.fetchResult(),"O","result of calculation is not correct");
-            //as zero is interpreted as "O" by OCR
+            Assert.assertEquals(calculatorPage.fetchResult(),expectedResult,"result of calculation is not correct");
         } catch (Exception e) {
             LOGGER.info("-----------------User is unable to compare results--------------------------" , e);
         }
